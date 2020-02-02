@@ -22,6 +22,9 @@ body {
 .square {
 	text-align: center;
 }
+.square:hover {
+	cursor: default;
+}
 
 .buttons {
 	margin: 0 auto .5em auto;

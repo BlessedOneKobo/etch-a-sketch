@@ -1,15 +1,14 @@
 const maxSize = 64;
-const containerWidth = 580;
-const containerHeight = 580;
+const containerSize = 580;
 const container = document.querySelector('.container');
-container.style.cssText = setStyleBox(containerWidth, containerHeight);
+container.style.cssText = setSquareSize(containerSize);
 container.style.backgroundColor = 'rgba(0,0,0,.5)';
 
 const buttons = document.querySelector('.buttons');
 const resetBtn = document.querySelector('button.reset');
 const rainbowBtn = document.querySelector('button.rainbow');
 
-buttons.style.width = `${containerWidth}px`;
+buttons.style.width = `${containerSize}px`;
 resetBtn.addEventListener('click', resetSquares);
 rainbowBtn.addEventListener('click', setRainbow);
 addSquares(16);
@@ -17,8 +16,7 @@ addSquares(16);
 // FUNCTIONS //
 
 function addSquares(numSquares) {
-	const width = containerWidth / numSquares;
-	const height = containerHeight / numSquares;
+	const size = containerSize / numSquares;
 	
 	for (let i = 0; i < numSquares; i++) {
 		const row = document.createElement('div');
@@ -35,13 +33,11 @@ function addSquares(numSquares) {
 
 function createSquare(numSquares) {
 	const square = document.createElement('div');
-	const width = 1 / numSquares * containerWidth;
-	const height = 1 / numSquares * containerHeight;
+	const size = containerSize / numSquares;
 	
 	square.classList.add('square');
-	square.style.cssText = setStyleBox(width, height);
+	square.style.cssText = setSquareSize(size);
 	square.style.backgroundColor = 'rgba(0,0,0,.5)';
-	square.style.cursor = 'default';
 	square.addEventListener('mouseover', changeColor);
 	
 	return square;
@@ -49,12 +45,11 @@ function createSquare(numSquares) {
 
 function resetSquares() {
 	const response = prompt('How many squares (MIN = 1, MAX = 64)?');
-	const numSquares = Number(response);
+	const squares = Number(response);
 	
-	if (!Number.isNaN(numSquares) && (1 <= numSquares && numSquares <= maxSize)) {
-		const squares = container.children;
-		[...squares].forEach(square => container.removeChild(square));
-		addSquares(numSquares);
+	if (!Number.isNaN(squares) && (1 <= squares && squares <= maxSize)) {
+		[...container.children].forEach(child => container.removeChild(child));
+		addSquares(squares);
 	}
 }
 
@@ -83,8 +78,8 @@ function randomColor() {
 	return `rgb(${red},${green},${blue})`;
 }
 
-function setStyleBox(width, height) {
-	return `width: ${width}px;height: ${height}px;flex: 1 1 ${width}px`;
+function setSquareSize(size) {
+	return `width: ${size}px;height: ${size}px;flex: 1 1 ${size}px`;
 }
 
 function randomNumber(n) {
