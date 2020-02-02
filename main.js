@@ -19,7 +19,6 @@ addSquares(16);
 function addSquares(numSquares) {
 	const width = containerWidth / numSquares;
 	const height = containerHeight / numSquares;
-	let squares = [];
 	
 	for (let i = 0; i < numSquares; i++) {
 		const row = document.createElement('div');
@@ -49,7 +48,7 @@ function createSquare(numSquares) {
 }
 
 function resetSquares() {
-	const response = prompt('How many squares?');
+	const response = prompt('How many squares (MIN = 1, MAX = 64)?');
 	const numSquares = Number(response);
 	
 	if (!Number.isNaN(numSquares) && (1 <= numSquares && numSquares <= maxSize)) {
