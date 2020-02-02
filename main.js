@@ -1,5 +1,5 @@
 const maxSize = 64;
-const containerSize = 580;
+const containerSize = 550;
 const container = document.querySelector('.container');
 container.style.cssText = setSquareSize(containerSize);
 container.style.backgroundColor = 'rgba(0,0,0,.5)';
