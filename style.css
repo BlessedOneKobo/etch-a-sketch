@@ -9,23 +9,26 @@ body {
 }
 
 .container {
-	width: 60%;
 	margin: 0 auto;
-	background-color: green;
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: column nowrap;
+}
+
+.row {
+	display: flex;
+	flex-flow: row nowrap;
 }
 
 .square {
-	flex: 1 1 6.25%;
 	text-align: center;
-	line-height: 2;
-	padding: 2%;
 }
 
-button {
-	cursor: pointer;
+.buttons {
+	margin: 0 auto .5em auto;
+	display: flex;
+	flex: row wrap;
 }
-button.reset {
-	margin: 1em auto;
+.buttons button {
+	cursor: pointer;
+	flex: 1 1 15%;
 }
