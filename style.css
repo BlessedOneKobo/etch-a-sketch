@@ -1,0 +1,22 @@
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: green;
+}
+
+.container {
+	width: 70%;
+	margin: 0 auto;
+	background-color: green;
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.square {
+	flex: 1 1 6.25%;
+	text-align: center;
+	line-height: 2;
+	padding: 2%;
+}
