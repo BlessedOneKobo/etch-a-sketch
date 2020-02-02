@@ -1,6 +1,14 @@
 const container = document.querySelector('.container');
 
+const resetBtn = document.createElement('button');
+resetBtn.classList.add('reset');
+resetBtn.textContent = 'Reset';
+resetBtn.addEventListener('click', resetSquares);
+document.body.insertBefore(resetBtn, container);
+
 addSquares(16);
+
+// FUNCTIONS //
 
 function addSquares(numSquares) {
 	let squares = [];
@@ -21,6 +29,11 @@ function createSquare(numSquares) {
 	square.addEventListener('mouseover', changeColor)
 	
 	return square;
+}
+
+function resetSquares() {
+	const squares = container.children;
+	[...squares].forEach(square => square.style.backgroundColor = '#000');
 }
 
 function changeColor(event) {

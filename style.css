@@ -4,10 +4,12 @@
 
 body {
 	background-color: #478db0ed;
+	display: flex;
+	flex-flow: column nowrap;
 }
 
 .container {
-	width: 70%;
+	width: 60%;
 	margin: 0 auto;
 	background-color: green;
 	display: flex;
@@ -19,4 +21,11 @@ body {
 	text-align: center;
 	line-height: 2;
 	padding: 2%;
+}
+
+button {
+	cursor: pointer;
+}
+button.reset {
+	margin: 1em auto;
 }
