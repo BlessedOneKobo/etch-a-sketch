@@ -1,13 +1,12 @@
 const container = document.querySelector('.container');
 
-createSquares(16);
+addSquares(16);
 
-function createSquares(numSquares) {
+function addSquares(numSquares) {
 	let squares = [];
 	for (let i = 0; i < numSquares; i++) {
 		for (let j = 0; j < numSquares; j++) {
-			const num = (numSquares * i + j) + 1;
-			const square = createSquare(num, numSquares);
+			const square = createSquare(numSquares);
 			container.appendChild(square);
 		}
 	}
@@ -29,11 +28,7 @@ function changeColor(event) {
 }
 
 function randomColor() {
-	const red = randomNumber(255);
-	const green = randomNumber(255);
-	const blue = randomNumber(255);
-
-	return `rgba(${red},${green},${blue})`;
+	return `rgba(${randomColor(255)},${randomColor(255)},${randomColor(255)})`;
 }
 
 function randomNumber(n) {
