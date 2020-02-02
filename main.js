@@ -3,7 +3,7 @@ const containerWidth = 580;
 const containerHeight = 580;
 const container = document.querySelector('.container');
 container.style.cssText = setStyleBox(containerWidth, containerHeight);
-container.style.backgroundColor = '#fff';
+container.style.backgroundColor = 'rgba(0,0,0,.5)';
 
 const buttons = document.querySelector('.buttons');
 const resetBtn = document.querySelector('button.reset');
@@ -41,9 +41,9 @@ function createSquare(numSquares) {
 	
 	square.classList.add('square');
 	square.style.cssText = setStyleBox(width, height);
-	square.style.backgroundColor = '#fff';
+	square.style.backgroundColor = 'rgba(0,0,0,.5)';
 	square.style.cursor = 'default';
-	square.addEventListener('mouseover', changeColor)
+	square.addEventListener('mouseover', changeColor);
 	
 	return square;
 }
@@ -68,19 +68,20 @@ function setRainbow(event) {
 }
 
 function changeColor(event) {
+	event.stopPropagation();
 	if (rainbowBtn.getAttribute('data-rainbow')) {		
 		event.target.style.backgroundColor = randomColor();
 	} else {
-		event.target.style.backgroundColor = '#000';
+		event.target.style.backgroundColor = '#fff';
 	}
 }
 
 function randomColor() {
-	const red = randomNumber(255).toString(16);
-	const green = randomNumber(255).toString(16);
-	const blue = randomNumber(255).toString(16);
+	const red = randomNumber(255);
+	const green = randomNumber(255);
+	const blue = randomNumber(255);
 
-	return `#${red}${green}${blue}`;
+	return `rgb(${red},${green},${blue})`;
 }
 
 function setStyleBox(width, height) {
