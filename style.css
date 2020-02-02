@@ -3,12 +3,13 @@
 }
 
 body {
-	background-color: #478db0ed;
+	background-color: #969191;
 	display: flex;
 	flex-flow: column nowrap;
 }
 
 .container {
+	border: 2px solid #555;
 	margin: 0 auto;
 	display: flex;
 	flex-flow: column nowrap;
@@ -21,6 +22,11 @@ body {
 
 .square {
 	text-align: center;
+	border: 1px solid #ddd;
+}
+.square:first-child, .square:nth-child(1n + 2) {
+	border-right: none;
+	border-bottom: none;
 }
 
 .buttons {
