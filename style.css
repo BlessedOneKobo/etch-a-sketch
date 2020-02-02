@@ -3,7 +3,7 @@
 }
 
 body {
-	background-color: #969191;
+	background-color: #1f666e;
 	display: flex;
 	flex-flow: column nowrap;
 }
@@ -28,13 +28,54 @@ body {
 	border-right: none;
 	border-bottom: none;
 }
+.square:hover {
+	cursor: default;
+}
 
 .buttons {
-	margin: 0 auto .5em auto;
+	margin: 1em auto 1em auto;
 	display: flex;
 	flex: row wrap;
+	justify-content: space-between;
 }
 .buttons button {
 	cursor: pointer;
-	flex: 1 1 15%;
+	flex: 0 1 15%;
+	height: 15%;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+	letter-spacing: .15em;
+	background-color: #f8f8f8;
+	padding: .5em .5em;
+	box-shadow: 1px 1px 4px #000;
+	color: #fff;
+}
+.buttons button:hover {
+	text-shadow: 0 0 2px #fff;
+}
+.buttons button.reset {
+	background-color: #990000;
+	color: #fff;
+	border: 1px solid #990000;
+}
+.buttons button.reset:hover {
+	background-color: #bb0000;
+}
+.buttons button:active {
+	border: none;
+	box-shadow: 1px 1px 2px inset #000, -1px -1px 2px inset #000;
+}
+.buttons button.rainbow {
+	border-width: 1px;
+	border-color: #222;
+	border-right-color: #171d4b;
+	border-left-color: #761717;
+	background: linear-gradient(to right, #990000, #009900, #000099);
+}
+button[data-rainbow] {
+	text-shadow: 0 0 2px #fff;
+}
+.buttons button.rainbow:hover {
+	background: linear-gradient(to right, #b00000, #00b000, #0000b0);
 }
