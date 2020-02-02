@@ -1,3 +1,4 @@
+const maxSize = 64;
 const containerWidth = 580;
 const containerHeight = 580;
 const container = document.querySelector('.container');
@@ -48,9 +49,10 @@ function createSquare(numSquares) {
 }
 
 function resetSquares() {
-	const numSquares = prompt('How many squares?');
+	const response = prompt('How many squares?');
+	const numSquares = Number(response);
 	
-	if (!isNaN(numSquares)) {
+	if (!Number.isNaN(numSquares) && (1 <= numSquares && numSquares <= maxSize)) {
 		const squares = container.children;
 		[...squares].forEach(square => container.removeChild(square));
 		addSquares(numSquares);
