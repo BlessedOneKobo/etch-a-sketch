@@ -80,10 +80,11 @@ body {
 	border-color: #222;
 	border-right-color: #171d4b;
 	border-left-color: #761717;
+	color: #ddd;
 	background: linear-gradient(to right, #990000, #009900, #000099);
 }
 button[data-rainbow] {
-	text-shadow: 0 0 2px #fff;
+	text-shadow: 0 0 4px #fff;
 }
 .buttons button.rainbow:hover {
 	background: linear-gradient(to right, #b00000, #00b000, #0000b0);

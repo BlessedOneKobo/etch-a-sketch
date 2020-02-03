@@ -78,8 +78,10 @@ function resetSquares() {
 function setRainbow(event) {
 	if (event.target.getAttribute('data-rainbow')) {
 		event.target.removeAttribute('data-rainbow');
+		event.target.style.color = '#ddd';
 	} else {
 		event.target.setAttribute('data-rainbow', 'yes');
+		event.target.style.color = '#fff';
 	}
 }
 
