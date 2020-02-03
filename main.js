@@ -1,18 +1,24 @@
+// Board //
 const maxSize = 64;
 const boardSize = 550;
+const boardColor = 'rgba(0,0,0,.5)';
 const board = document.querySelector('.board');
 board.style.cssText = setSquareSize(boardSize);
-board.style.backgroundColor = 'rgba(0,0,0,.5)';
+board.style.backgroundColor = boardColor;
 
+// Buttons //
 const buttons = document.querySelector('.buttons');
 const resetBtn = document.querySelector('button.reset');
 const rainbowBtn = document.querySelector('button.rainbow');
-
-let penIsDown = false;
 buttons.style.width = `${boardSize}px`;
 resetBtn.addEventListener('click', resetSquares);
 rainbowBtn.addEventListener('click', setRainbow);
+
+// Initialization //
+const defaultPenColor = '#fff';
+let penIsDown = false;
 addSquares(16);
+
 
 // FUNCTIONS //
 
@@ -24,7 +30,7 @@ function addSquares(numSquares) {
 		row.classList.add('row');
 		
 		for (let j = 0; j < numSquares; j++) {
-			const square = createSquare(numSquares)
+			const square = createSquare(size, numSquares)
 			row.appendChild(square);
 		}
 		
@@ -32,13 +38,12 @@ function addSquares(numSquares) {
 	}
 }
 
-function createSquare(numSquares) {
+function createSquare(size, numSquares) {
 	const square = document.createElement('div');
-	const size = boardSize / numSquares;
 	
 	square.classList.add('square');
 	square.style.cssText = setSquareSize(size);
-	square.style.backgroundColor = 'rgba(0,0,0,.5)';
+	square.style.backgroundColor = boardColor;
 	square.addEventListener('click', changePenStatus);
 	square.addEventListener('mouseover', changeColor);
 	
@@ -70,7 +75,6 @@ function setRainbow(event) {
 }
 
 function changeColor(event) {
-	event.stopPropagation();
 	if (penIsDown) paintSquare(event.target);
 }
 
@@ -78,7 +82,7 @@ function paintSquare(square) {
 	if (rainbowBtn.getAttribute('data-rainbow')) {		
 		square.style.backgroundColor = randomColor();
 	} else {
-		square.style.backgroundColor = '#fff';
+		square.style.backgroundColor = defaultPenColor;
 	}
 }
 
