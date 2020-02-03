@@ -1,5 +1,7 @@
 // Board //
-const maxSize = 64;
+const minSquares = 1;
+const maxSquares = 64;
+const defaultSquares = 16;
 const boardSize = 550;
 const boardColor = 'rgba(0,0,0,.5)';
 const board = document.querySelector('.board');
@@ -17,7 +19,7 @@ rainbowBtn.addEventListener('click', setRainbow);
 // Initialization //
 const defaultPenColor = '#fff';
 let penIsDown = false;
-addSquares(16);
+addSquares(defaultSquares);
 
 
 // FUNCTIONS //
@@ -45,7 +47,7 @@ function createSquare(size, numSquares) {
 	square.style.cssText = setSquareSize(size);
 	square.style.backgroundColor = boardColor;
 	square.addEventListener('click', changePenStatus);
-	square.addEventListener('mouseover', changeColor);
+	square.addEventListener('mouseover', handleHover);
 	
 	return square;
 }
@@ -56,10 +58,16 @@ function changePenStatus(event) {
 }
 
 function resetSquares() {
-	const response = prompt('How many squares (MIN = 1, MAX = 64)?');
-	const squares = Number(response);
-	
-	if (!Number.isNaN(squares) && (1 <= squares && squares <= maxSize)) {
+	const message = 'How many squares (MIN = 1, MAX = 64, DEFAULT = 16)?'
+	const response = prompt(message);
+
+	if (response !== null) {
+		let squares = Number(response);
+		
+		if (Number.isNaN(squares) || (squares < minSquares || squares > maxSquares)) {
+			squares = 16;
+		}
+		
 		[...board.children].forEach(child => board.removeChild(child));
 		penIsDown = false;
 		addSquares(squares);
@@ -74,19 +82,19 @@ function setRainbow(event) {
 	}
 }
 
-function changeColor(event) {
+function handleHover(event) {
 	if (penIsDown) paintSquare(event.target);
 }
 
 function paintSquare(square) {
 	if (rainbowBtn.getAttribute('data-rainbow')) {		
-		square.style.backgroundColor = randomColor();
+		square.style.backgroundColor = generateRandomColor();
 	} else {
 		square.style.backgroundColor = defaultPenColor;
 	}
 }
 
-function randomColor() {
+function generateRandomColor() {
 	const red = randomNumber(255);
 	const green = randomNumber(255);
 	const blue = randomNumber(255);
