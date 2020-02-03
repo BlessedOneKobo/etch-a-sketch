@@ -23,19 +23,19 @@ body {
 	flex-flow: row nowrap;
 }
 .row:last-child {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #ccc;
 }
 
 .square {
 	text-align: center;
-	border: 1px solid #ddd;
+	border: 1px solid #ccc;
 }
 .square:first-child, .square:nth-child(1n + 2) {
 	border-right: none;
 	border-bottom: none;
 }
 .square:last-child {
-	border-right: 1px solid #ddd;
+	border-right: 1px solid #ccc;
 }
 .square:hover {
 	cursor: default;

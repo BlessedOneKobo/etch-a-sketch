@@ -3,7 +3,7 @@ const minSquares = 1;
 const maxSquares = 64;
 const defaultSquares = 16;
 const boardSize = 550;
-const boardColor = 'rgba(0,0,0,.5)';
+const boardColor = 'rgba(255,255,255,.8)';
 const board = document.querySelector('.board');
 board.style.cssText = setSquareSize(boardSize);
 board.style.backgroundColor = boardColor;
@@ -17,7 +17,7 @@ resetBtn.addEventListener('click', resetSquares);
 rainbowBtn.addEventListener('click', setRainbow);
 
 // Initialization //
-const defaultPenColor = '#fff';
+const defaultPenColor = '#000';
 let penIsDown = false;
 addSquares(defaultSquares);
 
@@ -67,7 +67,8 @@ function resetSquares() {
 		if (Number.isNaN(squares) || (squares < minSquares || squares > maxSquares)) {
 			squares = 16;
 		}
-		
+
+		rainbowBtn.style.color = '#ddd';
 		rainbowBtn.removeAttribute('data-rainbow');
 		[...board.children].forEach(child => board.removeChild(child));
 		penIsDown = false;
@@ -90,10 +91,12 @@ function handleHover(event) {
 }
 
 function paintSquare(square) {
-	if (rainbowBtn.getAttribute('data-rainbow')) {		
+	if (rainbowBtn.getAttribute('data-rainbow')) {
 		square.style.backgroundColor = generateRandomColor();
+		square.style.borderColor = '#ddd';
 	} else {
 		square.style.backgroundColor = defaultPenColor;
+		square.style.borderColor = defaultPenColor;
 	}
 }
 
