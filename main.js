@@ -68,6 +68,7 @@ function resetSquares() {
 			squares = 16;
 		}
 		
+		rainbowBtn.removeAttribute('data-rainbow');
 		[...board.children].forEach(child => board.removeChild(child));
 		penIsDown = false;
 		addSquares(squares);
