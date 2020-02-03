@@ -8,6 +8,10 @@ body {
 	flex-flow: column nowrap;
 }
 
+.container {
+	padding-top: 1em;
+}
+
 .board {
 	border: 2px solid #555;
 	margin: 0 auto;
@@ -33,7 +37,7 @@ body {
 }
 
 .buttons {
-	margin: 1em auto 1em auto;
+	margin: 0 auto 1em auto;
 	display: flex;
 	flex: row wrap;
 	justify-content: space-between;
