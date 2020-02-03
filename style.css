@@ -13,7 +13,6 @@ body {
 }
 
 .board {
-	border: 2px solid #555;
 	margin: 0 auto;
 	display: flex;
 	flex-flow: column nowrap;
@@ -23,6 +22,9 @@ body {
 	display: flex;
 	flex-flow: row nowrap;
 }
+.row:last-child {
+	border-bottom: 1px solid #ddd;
+}
 
 .square {
 	text-align: center;
@@ -31,6 +33,9 @@ body {
 .square:first-child, .square:nth-child(1n + 2) {
 	border-right: none;
 	border-bottom: none;
+}
+.square:last-child {
+	border-right: 1px solid #ddd;
 }
 .square:hover {
 	cursor: default;
