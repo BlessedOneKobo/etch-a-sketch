@@ -72,7 +72,6 @@ function resetCells() {
       const currentCellSize = Number(currentCell.style.width.match(/\d+/)[0]);
 
       cells = Math.floor(boardSize / currentCellSize);
-      console.log(cells);
     }
 
     // Re-Initialization
