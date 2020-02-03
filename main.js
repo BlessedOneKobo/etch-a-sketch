@@ -1,14 +1,14 @@
 const maxSize = 64;
-const containerSize = 550;
-const container = document.querySelector('.container');
-container.style.cssText = setSquareSize(containerSize);
-container.style.backgroundColor = 'rgba(0,0,0,.5)';
+const boardSize = 550;
+const board = document.querySelector('.board');
+board.style.cssText = setSquareSize(boardSize);
+board.style.backgroundColor = 'rgba(0,0,0,.5)';
 
 const buttons = document.querySelector('.buttons');
 const resetBtn = document.querySelector('button.reset');
 const rainbowBtn = document.querySelector('button.rainbow');
 
-buttons.style.width = `${containerSize}px`;
+buttons.style.width = `${boardSize}px`;
 resetBtn.addEventListener('click', resetSquares);
 rainbowBtn.addEventListener('click', setRainbow);
 addSquares(16);
@@ -16,7 +16,7 @@ addSquares(16);
 // FUNCTIONS //
 
 function addSquares(numSquares) {
-	const size = containerSize / numSquares;
+	const size = boardSize / numSquares;
 	
 	for (let i = 0; i < numSquares; i++) {
 		const row = document.createElement('div');
@@ -27,13 +27,13 @@ function addSquares(numSquares) {
 			row.appendChild(square);
 		}
 		
-		container.appendChild(row);
+		board.appendChild(row);
 	}
 }
 
 function createSquare(numSquares) {
 	const square = document.createElement('div');
-	const size = containerSize / numSquares;
+	const size = boardSize / numSquares;
 	
 	square.classList.add('square');
 	square.style.cssText = setSquareSize(size);
@@ -48,7 +48,7 @@ function resetSquares() {
 	const squares = Number(response);
 	
 	if (!Number.isNaN(squares) && (1 <= squares && squares <= maxSize)) {
-		[...container.children].forEach(child => container.removeChild(child));
+		[...board.children].forEach(child => board.removeChild(child));
 		addSquares(squares);
 	}
 }
