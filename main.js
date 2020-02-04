@@ -3,16 +3,12 @@ const minCells = 1;
 const maxCells = 64;
 const defaultNumCells = 16;
 const boardSize = 550;
-const boardColor = 'rgba(255,255,255,.8)';
 const board = document.querySelector('.board');
-board.style.cssText = setCellSize(boardSize);
-board.style.backgroundColor = boardColor;
 
 // Buttons //
 const buttons = document.querySelector('.buttons');
 const resetBtn = document.querySelector('button.reset');
 const rainbowBtn = document.querySelector('button.rainbow');
-buttons.style.width = `${boardSize}px`;
 resetBtn.addEventListener('click', resetCells);
 rainbowBtn.addEventListener('click', setRainbow);
 
@@ -45,7 +41,6 @@ function createCell(cellSize, numCells) {
   
   cell.classList.add('cell');
   cell.style.cssText = setCellSize(cellSize);
-  cell.style.backgroundColor = boardColor;
   cell.addEventListener('click', changePenStatus);
   cell.addEventListener('mouseover', handleHover);
   
@@ -75,7 +70,6 @@ function resetCells() {
     }
 
     // Re-Initialization
-    rainbowBtn.style.color = '#ddd';
     rainbowBtn.removeAttribute('data-rainbow');
     [...board.children].forEach(child => board.removeChild(child));
     penIsDown = false;
@@ -86,10 +80,8 @@ function resetCells() {
 function setRainbow(event) {
   if (event.target.getAttribute('data-rainbow')) {
     event.target.removeAttribute('data-rainbow');
-    event.target.style.color = '#ddd';
   } else {
     event.target.setAttribute('data-rainbow', 'yes');
-    event.target.style.color = '#fff';
   }
 }
 
@@ -100,10 +92,10 @@ function handleHover(event) {
 function paintCell(cell) {
   if (rainbowBtn.getAttribute('data-rainbow')) {
     cell.style.backgroundColor = generateRandomColor();
-    cell.style.borderColor = '#ddd';
+    cell.setAttribute('data-color', 'random');
   } else {
     cell.style.backgroundColor = defaultPenColor;
-    cell.style.borderColor = defaultPenColor;
+    cell.setAttribute('data-color', 'default')
   }
 }
 

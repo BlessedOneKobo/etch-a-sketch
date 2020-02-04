@@ -10,12 +10,17 @@ body {
 
 .container {
   padding-top: 1em;
+  max-width: 70%;
+  margin: 0 auto;
 }
 
 .board {
   margin: 0 auto;
   display: flex;
   flex-flow: column nowrap;
+  background-color: rgba(255,255,255,.8);
+  width: 100%;
+  height: 550px;
 }
 
 .row {
@@ -29,6 +34,7 @@ body {
 .cell {
   text-align: center;
   border: 1px solid #ccc;
+  background-color: rgba(255,255,255,.8);
 }
 .cell:first-child, .cell:nth-child(1n + 2) {
   border-right: none;
@@ -40,12 +46,19 @@ body {
 .cell:hover {
   cursor: default;
 }
+.cell[data-color='default'] {
+  border-color: #000;
+}
+.cell[data-color='random'] {
+  border-color: rgb(255,255,255,.2);
+}
 
 .buttons {
   margin: 0 auto 1em auto;
   display: flex;
   flex: row wrap;
   justify-content: space-between;
+  width: 100%;
 }
 .buttons button {
   cursor: pointer;
@@ -60,15 +73,13 @@ body {
   box-shadow: 1px 1px 4px #000;
   color: #fff;
 }
-.buttons button:hover {
-  text-shadow: 0 0 2px #fff;
-}
 .buttons button.reset {
   background-color: #990000;
   color: #fff;
   border: 1px solid #990000;
 }
 .buttons button.reset:hover {
+  text-shadow: 0 0 2px #fff;
   background-color: #bb0000;
 }
 .buttons button:active {
@@ -78,14 +89,17 @@ body {
 .buttons button.rainbow {
   border-width: 1px;
   border-color: #222;
-  border-right-color: #171d4b;
-  border-left-color: #761717;
+  border-right-color: #000055;
+  border-left-color: #550000;
   color: #ddd;
-  background: linear-gradient(to right, #990000, #009900, #000099);
+  background: linear-gradient(to right, #550000, #005500, #000055);
 }
-button[data-rainbow] {
+.buttons button.rainbow[data-rainbow] {
+  color: #fff;
   text-shadow: 0 0 4px #fff;
+  background: linear-gradient(to right, #bb0000, #00bb00, #0000bb);
 }
 .buttons button.rainbow:hover {
-  background: linear-gradient(to right, #b00000, #00b000, #0000b0);
+  color: #fff;
+  background: linear-gradient(to right, #bb0000, #00bb00, #0000bb);
 }
