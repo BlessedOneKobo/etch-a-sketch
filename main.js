@@ -83,6 +83,8 @@ function setRainbow(event) {
   } else {
     event.target.setAttribute('data-rainbow', 'yes');
   }
+
+  penIsDown = false;
 }
 
 function handleHover(event) {
