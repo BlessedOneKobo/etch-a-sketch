@@ -6,7 +6,6 @@ const boardSize = 550;
 const board = document.querySelector('.board');
 
 // Buttons //
-const buttons = document.querySelector('.buttons');
 const resetBtn = document.querySelector('button.reset');
 const rainbowBtn = document.querySelector('button.rainbow');
 resetBtn.addEventListener('click', resetCells);
