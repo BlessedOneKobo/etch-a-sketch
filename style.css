@@ -27,9 +27,6 @@ body {
   display: flex;
   flex-flow: row nowrap;
 }
-.row:last-child {
-  border-bottom: 1px solid #ccc;
-}
 
 .cell {
   text-align: center;
