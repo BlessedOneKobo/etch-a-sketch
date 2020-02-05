@@ -94,7 +94,7 @@ body {
   color: #ddd;
   background: linear-gradient(to right, #550000, #005500, #000055);
 }
-.buttons button.rainbow[data-rainbow] {
+.buttons button.rainbow[data-rainbow='enabled'] {
   color: #fff;
   text-shadow: 0 0 4px #fff;
   background: linear-gradient(to right, #bb0000, #00bb00, #0000bb);

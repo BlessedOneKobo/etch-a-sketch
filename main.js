@@ -69,18 +69,18 @@ function resetCells() {
     }
 
     // Re-Initialization
-    rainbowBtn.removeAttribute('data-rainbow');
+    rainbowBtn.dataset.rainbow = 'disabled';
     [...board.children].forEach(child => board.removeChild(child));
     penIsDown = false;
     addCells(cells);
   }
 }
 
-function setRainbow(event) {
-  if (event.target.getAttribute('data-rainbow')) {
-    event.target.removeAttribute('data-rainbow');
+function setRainbow() {
+  if (this.dataset.rainbow === 'enabled') {
+    this.dataset.rainbow = 'disabled';
   } else {
-    event.target.setAttribute('data-rainbow', 'yes');
+    this.dataset.rainbow = 'enabled';
   }
 
   penIsDown = false;
@@ -91,12 +91,12 @@ function handleHover(event) {
 }
 
 function paintCell(cell) {
-  if (rainbowBtn.getAttribute('data-rainbow')) {
+  if (rainbowBtn.dataset.rainbow === 'enabled') {
     cell.style.backgroundColor = generateRandomColor();
-    cell.setAttribute('data-color', 'random');
+    cell.dataset.color = 'random';
   } else {
     cell.style.backgroundColor = defaultPenColor;
-    cell.setAttribute('data-color', 'default')
+    cell.dataset.color = 'default';
   }
 }
 
