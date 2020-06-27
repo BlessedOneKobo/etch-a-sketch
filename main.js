@@ -1,117 +1,168 @@
-// Board //
-const minCells = 1;
-const maxCells = 64;
-const defaultNumCells = 16;
-const boardSize = 550;
-const board = document.querySelector('.board');
+const eventAggregator = (function () {
+  const events = {};
 
-// Buttons //
-const resetBtn = document.querySelector('button.reset');
-const rainbowBtn = document.querySelector('button.rainbow');
-resetBtn.addEventListener('click', resetCells);
-rainbowBtn.addEventListener('click', setRainbow);
-
-// Initialization //
-const defaultPenColor = '#000';
-let penIsDown = false;
-addCells(defaultNumCells);
-
-
-// FUNCTIONS //
-
-function addCells(numCells) {
-  const cellSize = boardSize / numCells;
-  
-  for (let i = 0; i < numCells; i++) {
-    const row = document.createElement('div');
-    row.classList.add('row');
-    
-    for (let j = 0; j < numCells; j++) {
-      const cell = createCell(cellSize, numCells)
-      row.appendChild(cell);
-    }
-    
-    board.appendChild(row);
+  function register(name, handler) {
+    events[name] = events[name] || [];
+    events[name].push(handler);
   }
-}
 
-function createCell(cellSize, numCells) {
-  const cell = document.createElement('div');
-  
-  cell.classList.add('cell');
-  cell.style.cssText = setCellSize(cellSize);
-  cell.addEventListener('click', changePenStatus);
-  cell.addEventListener('mouseover', handleHover);
-  
-  return cell;
-}
+  function trigger(name, args) {
+    events[name] = events[name] || [];
+    events[name].forEach(handler => handler(args));
+  }
 
-function changePenStatus(event) {
-  penIsDown = !penIsDown;
-  if (penIsDown) paintCell(event.target);
-}
+  return { register, trigger };
+})();
 
-function resetCells() {
-  const message = 'How many cells per line (MIN = 1, MAX = 64)?'
-  const response = prompt(message);
+const colorUtils = (function () {
+  function _randomNumber(n) {
+    return Math.floor(Math.random() * (n + 1));
+  }
 
-  if (response !== null) {
-    let cells = Number(response);
-    
-    // If user enters no input or invalid input, set number of cells to
-    // the current configuration
-    if (Number.isNaN(cells) || (cells < minCells || cells > maxCells)) {
-      // Calculate the size of any of the current cells in pixels
-      const currentCell = document.querySelector('.cell');
-      const currentCellSize = Number(currentCell.style.width.match(/\d+/)[0]);
+  function generateRandomRGBColor() {
+    const red = _randomNumber(255);
+    const green = _randomNumber(255);
+    const blue = _randomNumber(255);
 
-      cells = Math.floor(boardSize / currentCellSize);
+    return `rgb(${red},${green},${blue})`;
+  }
+
+  return { generateRandomRGBColor };
+})();
+
+const boardController = (function () {
+  // Model
+  const MIN_CELLS = 1;
+  const MAX_CELLS = 64;
+  let numCells;
+
+  // Event listeners
+  eventAggregator.register('boardCellCountInput', (cells) => _setNumCells(cells));
+  eventAggregator.register('boardViewInit', () => {
+    const numCellsDefault = 16;
+    _setNumCells(numCellsDefault);
+  })
+
+  // Helpers
+  function _setNumCells(value) {
+    if (isNaN(value) || value < MIN_CELLS || value > MAX_CELLS) return;
+
+    numCells = value;
+    eventAggregator.trigger('numCellsUpdated', numCells);
+  }
+})();
+
+const boardView = (function () {
+  // Board Info
+  const boardSizeInPixels = 550;
+  let boardCellCount;
+  let boardCellPixelSize;
+
+  // Color Display Info
+  const DEFAULT_PEN_COLOR = '#000';
+  let penIsDown = false;
+
+  // DOM Cache
+  const boardDisplay = document.getElementById('board');
+  const resetBtn = document.querySelector('button.reset');
+  const rainbowBtn = document.querySelector('button.rainbow');
+
+  // Events Listeners
+  resetBtn.addEventListener('click', _handleCellsReset);
+  rainbowBtn.addEventListener('click', _handleRainbowSelection);
+  eventAggregator.register('numCellsUpdated', _handleBoardCellSizeUpdated);
+
+  // Init
+  eventAggregator.trigger('boardViewInit');
+  _createEmptyBoard();
+
+  // DOM Helpers
+  function _createEmptyBoard() {
+    const cellEvents = {
+      'click': _handleCellClick,
+      'mouseover': _handleCellHover
+    };
+
+    for (let i = 0; i < boardCellCount; i++) {
+      const row = document.createElement('div');
+      row.classList.add('row');
+
+      for (let j = 0; j < boardCellCount; j++) {
+        const cell = _createCell(cellEvents);
+        row.append(cell);
+      }
+
+      boardDisplay.appendChild(row);
     }
+  }
 
-    // Re-Initialization
+  function _resetBoardDisplay() {
     rainbowBtn.dataset.rainbow = 'disabled';
-    [...board.children].forEach(child => board.removeChild(child));
     penIsDown = false;
-    addCells(cells);
-  }
-}
-
-function setRainbow() {
-  if (this.dataset.rainbow === 'enabled') {
-    this.dataset.rainbow = 'disabled';
-  } else {
-    this.dataset.rainbow = 'enabled';
+    [...boardDisplay.children].forEach(rowElem => boardDisplay.removeChild(rowElem));
+    _createEmptyBoard();
   }
 
-  penIsDown = false;
-}
+  function _createCell(cellElemEvents) {
+    const cell = document.createElement('div');
 
-function handleHover(event) {
-  if (penIsDown) paintCell(event.target);
-}
+    cell.classList.add('cell');
+    cell.style.cssText = _setCellStyle();
 
-function paintCell(cell) {
-  if (rainbowBtn.dataset.rainbow === 'enabled') {
-    cell.style.backgroundColor = generateRandomColor();
-    cell.dataset.color = 'random';
-  } else {
-    cell.style.backgroundColor = defaultPenColor;
+    Object.keys(cellElemEvents).forEach(ev => {
+      cell.addEventListener(ev, cellElemEvents[ev])
+    });
+
+    return cell;
+  }
+
+  function _setCellStyle() {
+    return `width: ${boardCellPixelSize}px;height: ${boardCellPixelSize}px;flex: 1 1 ${boardCellPixelSize}px`;
+  }
+
+  function _paintCell(cell) {
+    if (rainbowBtn.dataset.rainbow === 'enabled') {
+      cell.style.backgroundColor = colorUtils.generateRandomRGBColor();
+      cell.dataset.color = 'random';
+      return;
+    }
+
+    cell.style.backgroundColor = DEFAULT_PEN_COLOR;
     cell.dataset.color = 'default';
   }
-}
 
-function generateRandomColor() {
-  const red = randomNumber(255);
-  const green = randomNumber(255);
-  const blue = randomNumber(255);
+  function _toggleRainbow(rainbow) {
+    if (rainbow === 'enabled') return 'disabled';
+    return 'enabled';
+  }
 
-  return `rgb(${red},${green},${blue})`;
-}
+  // Event Handlers
+  function _handleBoardCellSizeUpdated(numCells) {
+    boardCellCount = numCells;
+    boardCellPixelSize = boardSizeInPixels / boardCellCount;
+    _resetBoardDisplay();
+  }
 
-function setCellSize(size) {
-  return `width: ${size}px;height: ${size}px;flex: 1 1 ${size}px`;
-}
+  function _handleCellsReset() {
+    const message = 'How many cells per line (MIN = 1, MAX = 64)?'
+    const cells = +prompt(message);
 
-function randomNumber(n) {
-  return Math.floor(Math.random() * (n + 1));
-}
+    if (isNaN(cells)) return;
+
+    eventAggregator.trigger('boardCellCountInput', cells);
+  }
+
+  function _handleRainbowSelection() {
+    this.dataset.rainbow = _toggleRainbow(this.dataset.rainbow);
+    penIsDown = false;
+  }
+
+  function _handleCellClick(event) {
+    penIsDown = !penIsDown;
+    if (penIsDown) _paintCell(event.target);
+  }
+
+  function _handleCellHover(event) {
+    if (penIsDown) _paintCell(event.target);
+  }
+})();
