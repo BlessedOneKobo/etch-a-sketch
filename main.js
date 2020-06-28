@@ -68,10 +68,12 @@ const boardController = (function () {
    * @param {number} value - The new value of length
    */
   function _setNumCells(value) {
+    if (value === 0) eventAggregator.trigger('boardLengthUpdated', length);
+
     if (isNaN(value) || value < MIN_CELLS || value > MAX_CELLS) return;
 
     length = value;
-    eventAggregator.trigger('lengthUpdated', length);
+    eventAggregator.trigger('boardLengthUpdated', length);
   }
 })();
 
@@ -99,7 +101,7 @@ const boardView = (function () {
 
   resetBtn.addEventListener('click', _promptUserForNewBoardDimensions);
   rainbowBtn.addEventListener('click', _handleRainbowSelection);
-  eventAggregator.register('lengthUpdated', _updateBoardDimensions);
+  eventAggregator.register('boardLengthUpdated', _updateBoardDimensions);
 
   // Init //
 
@@ -203,9 +205,10 @@ const boardView = (function () {
   /** Prompts the user for new board dimensions */
   function _promptUserForNewBoardDimensions() {
     const message = 'How many cells per line (MIN = 1, MAX = 64)?'
-    const cells = +prompt(message);
+    const userInput = prompt(message);
+    const cells = +userInput;
 
-    if (isNaN(cells)) return;
+    if (userInput === null || isNaN(cells)) return;
 
     eventAggregator.trigger('boardLengthInput', cells);
   }
