@@ -1,4 +1,7 @@
-/** @module eventAggregator */
+/**
+ * Handles event delegation and message passing
+ * @module eventAggregator
+ */
 const eventAggregator = (function () {
   const events = {};
 
@@ -25,7 +28,10 @@ const eventAggregator = (function () {
   return { register, trigger };
 })();
 
-/** @module colorUtils */
+/**
+ * Handles colors
+ * @module colorUtils
+ */
 const colorUtils = (function () {
   /**
    * Generate a random number
@@ -51,12 +57,15 @@ const colorUtils = (function () {
   return { generateRandomRGBColor };
 })();
 
-/** @module boardController */
+/**
+ * Manages board state
+ * @module boardController
+ */
 const boardController = (function () {
   const NUM_CELLS_DEFAULT = 16;
   const MIN_CELLS = 1;
   const MAX_CELLS = 64;
-  let length;
+  let length = 0;
 
   // Event listeners //
 
@@ -77,14 +86,17 @@ const boardController = (function () {
   }
 })();
 
-/** @module boardView */
+/**
+ * Manages board display
+ * @module boardView
+ */
 const boardView = (function () {
 
   // Board Info //
 
   const boardPixelSize = 550;
-  let boardLength;
-  let boardCellPixelSize;
+  let boardLength = 0;
+  let boardCellPixelSize = 0;
 
   // Color Display Info //
 
@@ -141,7 +153,7 @@ const boardView = (function () {
   /**
    * Create a board cell on the DOM
    * @param {object} cellElemEvents - The events and handlers for the cell
-   * @return {object} The created DOM element
+   * @return {HTMLDivElement} The created DOM element
    */
   function _createCell(cellElemEvents) {
     const cell = document.createElement('div');
@@ -167,7 +179,7 @@ const boardView = (function () {
 
   /**
    * Change the color of a cell
-   * @param {object} cell - The DOM Element for the cell
+   * @param {HTMLDivElement} cell - The DOM Element for the cell
    */
   function _paintCell(cell) {
     if (rainbowBtn.dataset.rainbow === 'enabled') {
@@ -221,7 +233,7 @@ const boardView = (function () {
 
   /**
    * Toggle painting pen status and paint the cell if the pen is on the board
-   * @param {object} event - Event object
+   * @param {Event} event - Event object
    */
   function _handleCellClick(event) {
     penIsOnTheBoard = !penIsOnTheBoard;
@@ -230,7 +242,7 @@ const boardView = (function () {
 
   /**
    * Paint the cell if the painting pen is on the board
-   * @param {object} event - Event object
+   * @param {Event} event - Event object
    */
   function _handleCellHover(event) {
     if (penIsOnTheBoard) _paintCell(event.target);
