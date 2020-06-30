@@ -70,7 +70,7 @@ const boardController = (function () {
   // Event listeners //
 
   eventAggregator.register('boardViewInit', () => _setNumCells(NUM_CELLS_DEFAULT));
-  eventAggregator.register('boardLengthInput', (cells) => _setNumCells(cells));
+  eventAggregator.register('boardLengthInput', cells => _setNumCells(cells));
 
   /**
    * Sets the value of length
@@ -91,7 +91,6 @@ const boardController = (function () {
  * @module boardView
  */
 const boardView = (function () {
-
   // Board Info //
 
   const boardPixelSize = 550;
@@ -118,15 +117,15 @@ const boardView = (function () {
   // Init //
 
   eventAggregator.trigger('boardViewInit');
-  _renderEmptyBoard();
+  _resetBoardDisplay();
 
   // DOM Helpers //
 
   /** Render an empty board */
   function _renderEmptyBoard() {
     const cellEvents = {
-      'click': _handleCellClick,
-      'mouseover': _handleCellHover
+      click: _handleCellClick,
+      mouseover: _handleCellHover,
     };
 
     for (let i = 0; i < boardLength; i++) {
@@ -162,7 +161,7 @@ const boardView = (function () {
     cell.style.cssText = _generateCellCSS();
 
     Object.keys(cellElemEvents).forEach(ev => {
-      cell.addEventListener(ev, cellElemEvents[ev])
+      cell.addEventListener(ev, cellElemEvents[ev]);
     });
 
     return cell;
@@ -216,7 +215,7 @@ const boardView = (function () {
 
   /** Prompts the user for new board dimensions */
   function _promptUserForNewBoardDimensions() {
-    const message = 'How many cells per line (MIN = 1, MAX = 64)?'
+    const message = 'How many cells per line (MIN = 1, MAX = 64)?';
     const userInput = prompt(message);
     const cells = +userInput;
 
